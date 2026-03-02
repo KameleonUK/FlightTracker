@@ -72,7 +72,9 @@ function FlightTracker:ADDON_LOADED()
         announceFlight = false,
         minimapPos = 45,
         showMinimapButton = true,
-        lockPosition = false
+        lockPosition = false,
+        hideBorder = false,
+        hideBackground = false
     }
 
     if not FlightTrackerDB.settings then 
@@ -514,6 +516,22 @@ function FlightTracker:CreateTimerFrame()
     end)
     flightTimerFrame = f
     FlightTracker:ApplyTimerFrameLock()
+    FlightTracker:ApplyTimerFrameStyle()
+end
+
+function FlightTracker:ApplyTimerFrameStyle()
+    local f = flightTimerFrame
+    if not f then return end
+    if FlightTrackerDB.settings.hideBackground then
+        f:SetBackdropColor(0, 0, 0, 0)
+    else
+        f:SetBackdropColor(0.1, 0.1, 0.1, 0.9)
+    end
+    if FlightTrackerDB.settings.hideBorder then
+        f:SetBackdropBorderColor(0, 0, 0, 0)
+    else
+        f:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+    end
 end
 
 function FlightTracker:ApplyTimerFrameLock()
